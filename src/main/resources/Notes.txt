@@ -1,0 +1,69 @@
+Step 1:
+    Using POST,
+        http://localhost:8080/oauth/token?grant_type=password&username=ravindar&password=password&scope=read
+
+    Basic Auth:
+        Username - client1
+        Password - secret1
+
+    The response,
+    {
+        "access_token": "ShfgZ8VRrB8fzjTVF/Xp1a35e9A=",
+        "token_type": "bearer",
+        "refresh_token": "RZB706vqKc5i1Wt0/pd4cytRsdg=",
+        "expires_in": 42914,
+        "scope": "read"
+    }
+
+Step 2:
+
+    Validate the token using check_token, POST
+
+    http://localhost:8080/oauth/check_token?token=ShfgZ8VRrB8fzjTVF/Xp1a35e9A=
+
+    Basic Auth:
+            Username - client1
+            Password - secret1
+
+    The response,
+    {
+        "active": true,
+        "exp": 1629577401,
+        "user_name": "ravindar",
+        "authorities": [
+            "read"
+        ],
+        "client_id": "client1",
+        "scope": [
+            "read"
+        ]
+    }
+
+Step 3:
+
+    Access the resource using GET
+
+    http://localhost:8080/hello
+
+    Authorization - bearer ShfgZ8VRrB8fzjTVF/Xp1a35e9A=
+
+Step 4:
+
+    Refresh the token using
+
+    http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=RZB706vqKc5i1Wt0/pd4cytRsdg=&scope=read
+
+    Basic Auth:
+                Username - client1
+                Password - secret1
+
+
+    The response,
+
+    {
+        "access_token": "bjZQsr2Y3bgGWmWDmOznHL6G/yk=",
+        "token_type": "bearer",
+        "refresh_token": "RZB706vqKc5i1Wt0/pd4cytRsdg=",
+        "expires_in": 43200,
+        "scope": "read"
+    }
